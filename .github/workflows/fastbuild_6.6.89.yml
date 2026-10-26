@@ -565,6 +565,14 @@ jobs:
           sed -i 's/${scm_version}//' ./common/scripts/setlocalversion
           echo "CONFIG_LOCALVERSION_AUTO=n" >> ./common/arch/arm64/configs/gki_defconfig
            
+      - name: 关闭 host tools 的 -Werror (clang18 + libbpf 兼容)
+        run: |
+          cd kernel_workspace/common
+          # tools/bpf/resolve_btfids 里的 libbpf.c 在 clang18 下会因
+          # "assigning to 'char *' from 'const char *' discards qualifiers" 被 -Werror 打断
+          grep -rl -- '-Werror' tools 2>/dev/null | while read -r f; do sed -i 's/-Werror/-Wno-error/g' "$f"; done
+          echo "已把 tools/ 下 $(grep -rl -- '-Wno-error' tools 2>/dev/null | wc -l) 个文件里的 -Werror 降级为 -Wno-error"
+
       - name: 构建内核
         run: |
           WORKDIR="$(pwd)"

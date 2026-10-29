@@ -278,6 +278,8 @@ jobs:
           elif [[ ${{ github.event.inputs.ksu_type }} == "ksu" ]]; then
             echo "正在配置 FinaSU (LyraVoid/FinaSU v1.3.1, KERNEL_SU_UAPI_VERSION=6, 对应 me.yuki.fina 管理器)..."
             curl -LSs "https://raw.githubusercontent.com/LyraVoid/FinaSU/refs/tags/v1.3.1/kernel/setup.sh" | bash -s v1.3.1
+            # 让 KSU_VERSION_FULL 的 @分支 显示为 三叶 而不是 HEAD
+            git -C FinaSU checkout -q -B 三叶
             echo "KSUVER=33084" >> $GITHUB_ENV
             echo "ksuver=33084" >> $GITHUB_OUTPUT
           else

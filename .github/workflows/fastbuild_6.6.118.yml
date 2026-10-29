@@ -276,10 +276,10 @@ jobs:
             wget https://github.com/$GITHUB_REPOSITORY/raw/refs/heads/$GITHUB_REF_NAME/other_patch/apk_sign.patch
             patch -p2 -N -F 3 < apk_sign.patch || true
           elif [[ ${{ github.event.inputs.ksu_type }} == "ksu" ]]; then
-            echo "正在配置 FinaSU (LyraVoid/FinaSU v1.2.1, KERNEL_SU_UAPI_VERSION=6, 对应 me.yuki.fina 管理器)..."
-            curl -LSs "https://raw.githubusercontent.com/LyraVoid/FinaSU/refs/tags/v1.2.1/kernel/setup.sh" | bash -s v1.2.1
-            echo "KSUVER=33074" >> $GITHUB_ENV
-            echo "ksuver=33074" >> $GITHUB_OUTPUT
+            echo "正在配置 FinaSU (LyraVoid/FinaSU v1.3.1, KERNEL_SU_UAPI_VERSION=6, 对应 me.yuki.fina 管理器)..."
+            curl -LSs "https://raw.githubusercontent.com/LyraVoid/FinaSU/refs/tags/v1.3.1/kernel/setup.sh" | bash -s v1.3.1
+            echo "KSUVER=33084" >> $GITHUB_ENV
+            echo "ksuver=33084" >> $GITHUB_OUTPUT
           else
             echo "已选择无内置KernelSU模式，跳过KernelSU配置..."
           fi

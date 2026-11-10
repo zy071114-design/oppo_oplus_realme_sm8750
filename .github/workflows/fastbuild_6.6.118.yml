@@ -374,6 +374,9 @@ jobs:
         run: |
           cd kernel_workspace
           echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
+          # SUSFS 补丁自带直接入口，用 inline 后端，避免和 tracepoint 后端重复接管 syscall
+          echo "# CONFIG_KSU_HOOK_TRACEPOINT is not set" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_HOOK_SUSFS_INLINE=y" >> ./common/arch/arm64/configs/gki_defconfig
           if [[ "${{ github.event.inputs.susfs_enable }}" == "false" ]]; then
             echo "CONFIG_KSU_SUSFS=n" >> ./common/arch/arm64/configs/gki_defconfig
           fi
